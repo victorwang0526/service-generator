@@ -1,0 +1,4 @@
+rootProject.name = '${projectName}Service'
+include '${projectName}Service'
+include 'DBMigration'
+

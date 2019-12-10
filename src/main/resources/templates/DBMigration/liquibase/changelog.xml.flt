@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <property name="db_schema" value="public"/>
+    <changeSet author="Victor Wang" id="20180322144001" >
+        <sqlFile path="database/20180322144001_create_carrot.sql"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>
