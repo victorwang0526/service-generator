@@ -27,7 +27,7 @@ public class Generator {
     static {
         root.put("group", group);
         root.put("pkg", pkg);
-        root.put("projectName", projectName);
+        root.put("projectName", projectName.substring(0,1).toUpperCase() + projectName.substring(1).toLowerCase());
         root.put("projectNameLow", projectName.toLowerCase());
     }
 
