@@ -52,7 +52,7 @@ public class Generator {
             String dbMigrationPath = projectPath + "\\DBMigration";
             generator(cfg, dbMigrationPath, "DBMigration", "build.gradle.flt");
             generator(cfg, dbMigrationPath + "\\liquibase", "DBMigration/liquibase", "changelog.xml.flt");
-            generator(cfg, dbMigrationPath + "\\liquibase\\database", "DBMigration/liquibase/database", "20180322144001_create_carrot.sql.flt");
+            generator(cfg, dbMigrationPath + "\\liquibase\\database", "DBMigration/liquibase/database", "2020_01_01_create_user_and_token.sql.flt");
 
             // Service
             String ServicePath = projectPath + "\\" + projectName + "Service";
@@ -73,11 +73,15 @@ public class Generator {
             generator(cfg, daoPath, daoTemplatePath, "CarrotDao.java.flt");
             generator(cfg, daoPath, daoTemplatePath, "GenericDao.java.flt");
             generator(cfg, daoPath, daoTemplatePath, "QueryBuilder.java.flt");
+            generator(cfg, daoPath, daoTemplatePath, "TokenDao.java.flt");
+            generator(cfg, daoPath, daoTemplatePath, "UserDao.java.flt");
 
             // main - exception
             String exceptionPath = packagePath + "\\exception";
             String exceptionTemplatePath = serviceTemplatePath + "/exception";
             generator(cfg, exceptionPath, exceptionTemplatePath, "CarrotNotFoundException.java.flt");
+            generator(cfg, exceptionPath, exceptionTemplatePath, "UserNotFoundException.java.flt");
+            generator(cfg, exceptionPath, exceptionTemplatePath, "TokenNotFoundException.java.flt");
 
             // main - exception - base
             String exceptionBasePath = exceptionPath + "\\base";
@@ -93,15 +97,26 @@ public class Generator {
             generator(cfg, exceptionBasePath, exceptionBaseTemplatePath, "NumericErrorCodes.java.flt");
             generator(cfg, exceptionBasePath, exceptionBaseTemplatePath, "ValidationException.java.flt");
 
+            // main - filter
+            String filterPath = packagePath + "\\filter";
+            String filterTemplatePath = serviceTemplatePath + "/filter";
+            generator(cfg, filterPath, filterTemplatePath, "AuthorizationInterceptor.java.flt");
+            generator(cfg, filterPath, filterTemplatePath, "AuthorizationManager.java.flt");
+            generator(cfg, filterPath, filterTemplatePath, "CORSResponseFilter.java.flt");
+
             // main - manager
             String managerPath = packagePath + "\\manager";
             String managerTemplatePath = serviceTemplatePath + "/manager";
             generator(cfg, managerPath, managerTemplatePath, "CarrotManager.java.flt");
+            generator(cfg, managerPath, managerTemplatePath, "TokenManager.java.flt");
+            generator(cfg, managerPath, managerTemplatePath, "UserManager.java.flt");
 
             // main - model
             String modelPath = packagePath + "\\model";
             String modelTemplatePath = serviceTemplatePath + "/model";
             generator(cfg, modelPath, modelTemplatePath, "Carrot.java.flt");
+            generator(cfg, modelPath, modelTemplatePath, "Token.java.flt");
+            generator(cfg, modelPath, modelTemplatePath, "User.java.flt");
 
             // main - model - base
             String modelBasePath = modelPath + "\\base";
@@ -113,6 +128,7 @@ public class Generator {
             String resourcePath = packagePath + "\\resource";
             String resourceTemplatePath = serviceTemplatePath + "/resource";
             generator(cfg, resourcePath, resourceTemplatePath, "CarrotResource.java.flt");
+            generator(cfg, resourcePath, resourceTemplatePath, "UserResource.java.flt");
 
             // main - resource
             String sharedObjectPath = packagePath + "\\sharedObject";
@@ -122,11 +138,16 @@ public class Generator {
             generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "CarrotUpdate.java.flt");
             generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "PaginatedAPIResult.java.flt");
             generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "PaginationContext.java.flt");
+            generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "UserCreate.java.flt");
+            generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "UserInfo.java.flt");
+            generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "UserToken.java.flt");
+            generator(cfg, sharedObjectPath, sharedObjectTemplatePath, "UserUpdate.java.flt");
 
             // main - util
             String utilPath = packagePath + "\\util";
             String utilTemplatePath = serviceTemplatePath + "/util";
             generator(cfg, utilPath, utilTemplatePath, "UniqueString.java.flt");
+            generator(cfg, utilPath, utilTemplatePath, "MD5Util.java.flt");
 
             // main - util - dao
             String utilDaoPath = utilPath + "\\dao";
@@ -170,6 +191,8 @@ public class Generator {
             String resourcesMapperPath = resourcesPath + "\\mapper";
             String resourcesMapperTemplatePath = resourcesTemplatePath + "/mapper";
             generator(cfg, resourcesMapperPath, resourcesMapperTemplatePath, "Carrot.xml.flt");
+            generator(cfg, resourcesMapperPath, resourcesMapperTemplatePath, "Token.xml.flt");
+            generator(cfg, resourcesMapperPath, resourcesMapperTemplatePath, "User.xml.flt");
 
         } catch (Exception e) {
             e.printStackTrace();

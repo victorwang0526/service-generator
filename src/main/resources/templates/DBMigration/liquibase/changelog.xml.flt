@@ -4,8 +4,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <property name="db_schema" value="public"/>
-    <changeSet author="Victor Wang" id="20180322144001" >
-        <sqlFile path="database/20180322144001_create_carrot.sql"
+    <changeSet author="Victor Wang" id="2020_01_01_create_user_and_token" >
+        <sqlFile path="database/2020_01_01_create_user_and_token.sql"
                  relativeToChangelogFile="true"/>
     </changeSet>
 </databaseChangeLog>

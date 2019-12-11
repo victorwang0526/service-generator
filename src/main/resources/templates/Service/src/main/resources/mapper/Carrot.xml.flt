@@ -24,13 +24,13 @@
     <select id="getAll" resultMap="carrotResultMapper">
         SELECT
         <include refid="allFields" />
-        FROM carrot
+        FROM t_carrot
         ORDER BY created_at
     </select>
 
     <select id="getCount" parameterType="java.util.HashMap" resultType="int">
         SELECT COUNT(*) as cnt
-        FROM carrot
+        FROM t_carrot
         WHERE 1=1
         <include refid="findCarrotsParams"/>
     </select>
@@ -38,12 +38,12 @@
     <select id="get" resultMap="carrotResultMapper" parameterType="String" >
         select
         <include refid="allFields" />
-        from carrot
+        from t_carrot
         where id = ${r"#{id}"}
     </select>
 
     <insert id="insert" parameterType="Carrot" >
-        insert into carrot (
+        insert into t_carrot (
         id,
         name,
         price,
@@ -63,7 +63,7 @@
     </insert>
 
     <update id="update" parameterType="Carrot" >
-        update carrot
+        update t_carrot
         SET name = ${r"#{name}"},
         price = ${r"#{price}"},
         weight = ${r"#{weight}"},
@@ -82,7 +82,7 @@
     <select id="getList" parameterType="java.util.HashMap" resultMap="carrotResultMapper">
         SELECT
         <include refid="allFields" />
-        FROM carrot
+        FROM t_carrot
         WHERE 1=1
         <include refid="findCarrotsParams"/>
         <choose>
@@ -99,11 +99,11 @@
     </select>
 
     <delete id="purge">
-        DELETE FROM carrot
+        DELETE FROM t_carrot
     </delete>
 
     <delete id="delete" parameterType="String">
-        DELETE FROM carrot
+        DELETE FROM t_carrot
         WHERE id = ${r"#{id}"}
     </delete>
 </mapper>

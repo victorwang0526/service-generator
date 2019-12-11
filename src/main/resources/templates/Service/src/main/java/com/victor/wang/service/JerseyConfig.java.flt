@@ -1,7 +1,8 @@
 package ${pkg};
 
-import ${pkg}.resource.CarrotResource;
 import ${pkg}.util.exception.ApplicationExceptionMapper;
+import ${pkg}.filter.AuthorizationInterceptor;
+import ${pkg}.filter.CORSResponseFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.wadl.internal.WadlResource;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -26,20 +27,21 @@ public class JerseyConfig
 
 	public JerseyConfig()
 	{
-
 		this.registerEndpoints();
+
+		register(CORSResponseFilter.class);
+		register(AuthorizationInterceptor.class);
 
 		//register exception
 		register(ApplicationExceptionMapper.class);
 
 		property(ServletProperties.FILTER_FORWARD_ON_404, true);
-
 	}
 
 	private void registerEndpoints()
 	{
 		//register resource
-		register(CarrotResource.class);
+		packages("${pkg}.resource");
 		// Available at /<Jersey's servlet path>/application.wadl
 		this.register(WadlResource.class);
 	}
