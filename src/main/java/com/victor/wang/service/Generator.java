@@ -186,6 +186,7 @@ public class Generator {
             String resourcesPath = ServicePath + "\\src\\main\\resources";
             String resourcesTemplatePath = "Service/src/main/resources";
             generator(cfg, resourcesPath, resourcesTemplatePath, "application.yaml.flt");
+            generator(cfg, resourcesPath, resourcesTemplatePath, "logback.xml.flt");
 
             //resources - mapper
             String resourcesMapperPath = resourcesPath + "\\mapper";
