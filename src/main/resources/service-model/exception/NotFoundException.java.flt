@@ -1,0 +1,17 @@
+package ${pkg}.exception;
+
+import ${pkg}.exception.base.NotFoundException;
+import ${pkg}.exception.base.NumericErrorCodes;
+
+public class ${modelName}NotFoundException
+	extends NotFoundException
+{
+    public static final int ${modelNameU}_NOT_FOUND = 10000;//copy this line to NumericErrorCodes and change the number
+	public static final int NUMERIC_ERROR_CODE = NumericErrorCodes.${modelNameU}_NOT_FOUND;
+	public static final String ERROR_CODE = "errors.${pkg}.${modelNameL}_not_found";
+
+	public ${modelName}NotFoundException(String id)
+	{
+		super(NUMERIC_ERROR_CODE, ERROR_CODE, "The ${modelNameL} [{}] can not be found.", id);
+	}
+}

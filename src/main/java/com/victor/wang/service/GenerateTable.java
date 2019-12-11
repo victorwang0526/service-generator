@@ -36,6 +36,8 @@ public class GenerateTable {
 
             root.put("tableName", tableName);
             root.put("modelName", modelName);
+            root.put("modelNameL", modelName.substring(0,1).toLowerCase() + modelName.substring(1));
+            root.put("modelNameU", modelName.toUpperCase());
             root.put("columns", columns);
             root.put("hasDate", columns.stream().filter(c -> c.getJavaType().equals("Date")).toArray().length > 0);
 
@@ -48,6 +50,9 @@ public class GenerateTable {
 
             // dao
             generateForModel(cfg, packagePath + "\\dao", "dao", "Dao.java.flt", modelName);
+
+            // exception
+            generateForModel(cfg, packagePath + "\\exception", "exception", "NotFoundException.java.flt", modelName);
 
             // model
             generateForModel(cfg, packagePath + "\\model", "model", ".java.flt", modelName);
