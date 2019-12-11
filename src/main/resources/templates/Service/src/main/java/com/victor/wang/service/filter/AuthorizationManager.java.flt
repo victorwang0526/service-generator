@@ -1,0 +1,12 @@
+package ${pkg}.filter;
+
+
+import ${pkg}.model.Token;
+import ${pkg}.model.User;
+
+public class AuthorizationManager
+{
+	public static ThreadLocal<Token> token = new ThreadLocal<>();
+	public static ThreadLocal<User> logonUser = new ThreadLocal<>();
+
+}

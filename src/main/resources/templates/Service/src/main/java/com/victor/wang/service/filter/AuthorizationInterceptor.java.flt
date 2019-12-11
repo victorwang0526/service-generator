@@ -1,0 +1,67 @@
+package ${pkg}.filter;
+
+import ${pkg}.dao.TokenDao;
+import ${pkg}.dao.UserDao;
+import ${pkg}.exception.base.BadRequestException;
+import ${pkg}.model.Token;
+import ${pkg}.model.User;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import java.io.IOException;
+import java.util.List;
+
+public class AuthorizationInterceptor
+		implements ContainerRequestFilter {
+		
+	public static final String TOKEN = "token";
+
+	@Autowired
+	private TokenDao tokenDao;
+
+	@Autowired
+	private UserDao userDao;
+
+	@Override
+	public void filter(ContainerRequestContext requestContext)
+			throws IOException
+	{
+		String path = requestContext.getUriInfo().getAbsolutePath().getPath();
+
+		if (requestContext.getMethod().toUpperCase().equals("OPTIONS")
+				||!path.contains("/api/")
+				|| path.contains("/login")
+				|| path.contains("/register")
+				|| path.contains("/findPassword")
+				|| path.contains("/export")
+				|| path.contains("/print")
+				|| path.contains("excel"))
+		{
+			return;
+		} else {
+
+			String token = requestContext.getHeaderString(TOKEN);
+			if(token == null || StringUtils.isEmpty(token)){
+				throw new BadRequestException(401, "authorization_needed", "no token");
+			}
+
+			List<Token> tokens = tokenDao.getByToken(token);
+
+			if(tokens == null || tokens.size() == 0){
+				throw new BadRequestException(403, "authorization_error", "invalid token");
+			}
+			Token tokenInfo = tokens.get(0);
+
+			User user = userDao.get(tokenInfo.getUserId());
+			if(user == null){
+				throw new BadRequestException(403, "authrization_error", "invalid user");
+			}
+
+			AuthorizationManager.logonUser.set(user);
+			AuthorizationManager.token.set(tokenInfo);
+
+		}
+	}
+}

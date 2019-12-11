@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="${pkg}.dao.TokenDao" >
+    <resultMap id="tokenResultMapper" type="${pkg}.model.Token" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="token" property="token" jdbcType="VARCHAR" />
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+        <result column="last_modified_at" property="lastModifiedAt" jdbcType="TIMESTAMP" />
+        <result column="rvn" property="rvn" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="allFields" >
+        id,
+        user_id,
+        token,
+        created_at,
+        last_modified_at,
+        rvn
+    </sql>
+
+    <select id="getAll" resultMap="tokenResultMapper">
+        SELECT
+        <include refid="allFields" />
+        FROM t_token
+        ORDER BY created_at
+    </select>
+
+    <select id="getCount" parameterType="java.util.HashMap" resultType="int">
+        SELECT COUNT(*) as cnt
+        FROM t_token
+        WHERE 1=1
+        <include refid="findTokensParams"/>
+    </select>
+
+    <select id="get" resultMap="tokenResultMapper" parameterType="String" >
+        SELECT
+        <include refid="allFields" />
+        FROM t_token
+        WHERE id = ${r"#{id}"}
+    </select>
+
+    <insert id="insert" parameterType="Token" >
+        INSERT INTO t_token (
+        id,
+        user_id,
+        token,
+        created_at,
+        last_modified_at,
+        rvn
+        )
+        VALUES (
+        ${r"#{id,jdbcType=VARCHAR}"},
+        ${r"#{userId,jdbcType=VARCHAR}"},
+        ${r"#{token,jdbcType=VARCHAR}"},
+        ${r"#{createdAt,jdbcType=TIMESTAMP}"},
+        ${r"#{lastModifiedAt,jdbcType=TIMESTAMP}"},
+        ${r"#{rvn,jdbcType=INTEGER}"}
+        )
+    </insert>
+
+    <update id="update" parameterType="Token" >
+        UPDATE t_token
+        SET 
+        user_id          = ${r"#{userId,jdbcType=VARCHAR}"},
+        token            = ${r"#{token,jdbcType=VARCHAR}"},
+        created_at       = ${r"#{createdAt,jdbcType=TIMESTAMP}"},
+        last_modified_at = getdate(),
+        rvn = rvn+1
+        WHERE id = ${r"#{id,jdbcType=VARCHAR}"}
+    </update>
+
+    <sql id="findTokensParams">
+    </sql>
+    <select id="getList" parameterType="java.util.HashMap" resultMap="tokenResultMapper">
+        SELECT
+        <include refid="allFields" />
+        FROM t_token
+        WHERE 1=1
+        <include refid="findTokensParams"/>
+    </select>
+
+    <delete id="purge">
+        DELETE FROM t_token
+    </delete>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM t_token
+        WHERE id = ${r"#{id}"}
+    </delete>
+
+    <select id="getByToken" resultMap="tokenResultMapper">
+        select
+        <include refid="allFields" />
+        from
+        t_token
+        where token = ${r"#{token}"}
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from t_token
+        where user_id = ${r"#{userId}"}
+    </delete>
+</mapper>

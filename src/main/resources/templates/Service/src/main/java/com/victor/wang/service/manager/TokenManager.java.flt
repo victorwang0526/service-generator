@@ -1,0 +1,48 @@
+package ${pkg}.manager;
+
+import ${pkg}.dao.TokenDao;
+import ${pkg}.exception.TokenNotFoundException;
+import ${pkg}.model.Token;
+import ${pkg}.util.UniqueString;
+import ${pkg}.util.dao.DaoHelper;
+import ma.glasnost.orika.MapperFacade;
+import net.sf.oval.constraint.AssertValid;
+import net.sf.oval.guard.Guarded;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@Guarded
+public class TokenManager
+{
+	private static final Logger LOGGER = LoggerFactory.getLogger(TokenManager.class);
+
+	@Autowired
+	TokenDao tokenDao;
+
+	@Autowired
+	private MapperFacade mapper;
+
+	public Token getToken(String id)
+	{
+		LOGGER.debug("TokenManager, getToken; id: {}", id);
+
+		Token token = tokenDao.get(id);
+		if (token == null)
+		{
+			throw new TokenNotFoundException(id);
+		}
+		return token;
+	}
+
+	public void deleteToken(String id)
+	{
+		LOGGER.info("TokenManager, deleteToken; id: {}", id);
+		getToken(id);
+		tokenDao.delete(id);
+	}
+}

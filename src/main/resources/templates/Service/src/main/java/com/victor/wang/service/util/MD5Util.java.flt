@@ -1,0 +1,31 @@
+package ${pkg}.util;
+
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class MD5Util
+{
+	public static String encoderByMd5(String str)
+	{
+		String encodedStr = "";
+		MessageDigest md5 = null;
+		try
+		{
+			md5 = MessageDigest.getInstance("MD5");
+			encodedStr = (new HexBinaryAdapter()).marshal(md5.digest(str.getBytes()));
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			e.printStackTrace();
+		}
+		return encodedStr;
+	}
+
+//	public static void main(String[] args){
+//		String aa = "admin:admin123";
+//		Base64.getEncoder().encode(aa.getBytes());
+//		String s = encoderByMd5("admin123");
+//	}
+}

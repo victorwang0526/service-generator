@@ -1,0 +1,136 @@
+package ${pkg}.manager;
+
+import ${pkg}.dao.TokenDao;
+import ${pkg}.dao.UserDao;
+import ${pkg}.exception.UserNotFoundException;
+import ${pkg}.exception.base.BadRequestException;
+import ${pkg}.model.Token;
+import ${pkg}.model.User;
+import ${pkg}.sharedObject.UserCreate;
+import ${pkg}.sharedObject.UserInfo;
+import ${pkg}.sharedObject.UserToken;
+import ${pkg}.sharedObject.UserUpdate;
+import ${pkg}.util.MD5Util;
+import ${pkg}.util.UniqueString;
+import ${pkg}.util.dao.DaoHelper;
+import ma.glasnost.orika.MapperFacade;
+import net.sf.oval.constraint.AssertValid;
+import net.sf.oval.guard.Guarded;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Base64;
+import java.util.List;
+
+@Service
+@Guarded
+public class UserManager
+{
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserManager.class);
+
+	@Autowired
+	UserDao userDao;
+
+	@Autowired
+	private MapperFacade mapper;
+
+	@Autowired
+	private TokenDao tokenDao;
+
+	public UserToken loginUser(String authorization)
+	{
+		String up = authorization.replace("Basic ", "");
+		String encoding[] = new String(Base64.getDecoder().decode(up)).split(":");
+		String username = encoding[0];
+		String password = encoding[1];
+
+		List<User> users = userDao.getUserLogin(username);
+
+		if (users == null || users.size() == 0)
+		{
+			throw new BadRequestException(400, "username_not_found", "username not found!");
+		}
+
+		User user = users.get(0);
+
+		if (!user.getPassword().equals(MD5Util.encoderByMd5(password)))
+		{
+			throw new BadRequestException(400, "password_incorrect", "password incorrect!");
+		}
+
+		return getToken(user);
+	}
+
+	private UserToken getToken(User user)
+	{
+		//delete old session
+		tokenDao.deleteByUserId(user.getId());
+		//save user session
+		Token token = new Token();
+		token.setId(UniqueString.uuidUniqueString());
+		token.setUserId(user.getId());
+		token.setToken(token.getId());
+		DaoHelper.insert(tokenDao, token);
+
+		UserToken userToken = new UserToken();
+		userToken.setToken(token.getToken());
+
+		userToken.setUserInfo(mapper.map(user, UserInfo.class));
+		return userToken;
+	}
+
+	public User getUser(String id)
+	{
+		LOGGER.debug("UserManager, getUser; id: {}", id);
+
+		User user = userDao.get(id);
+		if (user == null)
+		{
+			throw new UserNotFoundException(id);
+		}
+		return user;
+	}
+
+	public User createUser(@AssertValid UserCreate userCreate)
+	{
+		LOGGER.info("UserManager, createUser; userCreate: {}", userCreate);
+		User user = mapper.map(userCreate, User.class);
+		user.setId(UniqueString.uuidUniqueString());
+		DaoHelper.insert(userDao, user);
+		return user;
+	}
+
+	public User updateUser(String id, @AssertValid UserUpdate userUpdate)
+	{
+		LOGGER.info("UserManager, updateUser; id: {}, userUpdate: {}", id, userUpdate);
+		User user = getUser(id);
+		DaoHelper.updateFromSource(userDao, userUpdate, user);
+		return user;
+	}
+
+	public List<User> findUsers(
+			int page,
+			int size)
+	{
+		LOGGER.debug("UserManager, findUser; page: {}, size: {}",  page, size);
+		UserDao.UserQueryBuild queryBuild = UserDao.UserQueryBuild.build()
+				.pagination(page, size);
+		return userDao.getList(queryBuild.toParameter());
+	}
+
+	public int countUsers()
+	{
+		LOGGER.debug("UserManager, countUser; ");
+		UserDao.UserQueryBuild queryBuild = UserDao.UserQueryBuild.build();
+		return userDao.getCount(queryBuild.toParameter());
+	}
+
+	public void deleteUser(String id)
+	{
+		LOGGER.info("UserManager, deleteUser; id: {}", id);
+		getUser(id);
+		userDao.delete(id);
+	}
+}

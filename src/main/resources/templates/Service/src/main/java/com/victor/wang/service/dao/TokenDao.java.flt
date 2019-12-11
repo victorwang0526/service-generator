@@ -1,0 +1,25 @@
+package ${pkg}.dao;
+
+import ${pkg}.model.Token;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface TokenDao
+		extends GenericDao<String, Token> {
+
+	void deleteByUserId(@Param("userId") String userId);
+
+	List<Token> getByToken(@Param("token") String token);
+
+	class TokenQueryBuild
+			extends QueryBuilder
+	{
+		public static TokenQueryBuild build()
+		{
+			return new TokenQueryBuild();
+		}
+	}
+}

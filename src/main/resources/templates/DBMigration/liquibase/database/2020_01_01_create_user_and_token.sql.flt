@@ -1,0 +1,47 @@
+--
+-- create database dbname default charset utf8 collate utf8_general_ci;
+
+-- create user 'dbusername'@'%' identified by 'dbpassword';
+
+-- grant all on dbname.* to 'dbusername'@'%';
+
+-- flush privileges;
+
+CREATE TABLE t_user
+(
+    id NVARCHAR(32) PRIMARY KEY,
+    login_name NVARCHAR(255) NOT NULL,
+    password NVARCHAR(255) NOT NULL,
+    created_at DATETIME,
+    last_modified_at DATETIME,
+    last_login_at DATETIME,
+    last_login_ip DATETIME
+);
+
+-- admin:admin123
+insert into t_user(id, login_name, password, created_at)
+VALUES ('160afeaf15064e42874d62b1ab325079', 'admin', '0192023A7BBD73250516F069DF18B500', now());
+
+
+-- 登录session表
+create table t_token(
+  id NVARCHAR(32) primary key,
+  user_id NVARCHAR(32) not null,
+  token NVARCHAR(32) not null,
+
+  CREATED_AT datetime,
+  LAST_MODIFIED_AT datetime,
+  RVN int
+);
+
+-- create carrot table
+CREATE TABLE t_carrot
+(
+    id VARCHAR(32) PRIMARY KEY,
+    name VARCHAR(32),
+    price INT,
+    weight INT,
+    created_at TIMESTAMP,
+    last_modified_at TIMESTAMP,
+    rvn INT
+);
