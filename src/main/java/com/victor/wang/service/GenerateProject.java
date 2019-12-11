@@ -30,13 +30,9 @@ public class GenerateProject {
             generateForProject(cfg, dbMigrationPath + "\\liquibase\\database", "DBMigration/liquibase/database", "2020_01_01_create_user_and_token.sql.flt");
 
             // Service
-            String ServicePath = projectPath + "\\" + ProjectName + "Service";
             generateForProject(cfg, ServicePath, "Service", "build.gradle.flt");
             // main
-            String packagePath = ServicePath + "\\src\\main\\java";
-            for(String item : pkg.split("\\.")) {
-                packagePath += "\\" + item;
-            }
+
             String serviceTemplatePath = "Service/src/main/java/com/victor/wang/service";
             generateForProject(cfg, packagePath, serviceTemplatePath, "AppConfig.java.flt");
             generateForProject(cfg, packagePath, serviceTemplatePath, "Application.java.flt");

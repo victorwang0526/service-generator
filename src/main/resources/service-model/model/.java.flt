@@ -1,0 +1,32 @@
+package ${pkg}.model;
+
+import ${pkg}.model.base.AuditedMysqlEntity;
+
+<#if hasDate>
+import java.util.Date;
+</#if>
+
+public class ${modelName}
+	extends AuditedMysqlEntity
+{
+    <#list columns as c>
+    /**
+     * ${c.comments}
+     */
+    private ${c.javaType} ${c.propertyName};
+
+    </#list>
+
+    <#list columns as c>
+    public ${c.javaType} get${c.propertyNameU}()
+    {
+        return ${c.propertyName};
+    }
+
+    public void set${c.propertyNameU}(${c.javaType} ${c.propertyName})
+    {
+        this.${c.propertyName} = ${c.propertyName};
+    }
+
+    </#list>
+}

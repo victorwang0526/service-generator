@@ -21,14 +21,14 @@ public class GeneratorUtil {
      * generate java api service
      */
     public static void generateForProject(Configuration cfg, String dirPath, String templatePath, String templateName) throws IOException, TemplateException {
-        generate(cfg, dirPath, "templates", templatePath, templateName);
+        generate(cfg, dirPath, "templates", templatePath, templateName, "");
     }
 
     /**
      * generate model/dao/mapper...
      */
-    public static void generateForModel(Configuration cfg, String dirPath, String templatePath, String templateName) throws IOException, TemplateException {
-        generate(cfg, dirPath, "service-model", templatePath, templateName);
+    public static void generateForModel(Configuration cfg, String dirPath, String templatePath, String templateName, String modelName) throws IOException, TemplateException {
+        generate(cfg, dirPath, "service-model", templatePath, templateName, modelName);
     }
 
     /**
@@ -39,15 +39,15 @@ public class GeneratorUtil {
      * @param templateName the template name, like a.flt
      * @throws IOException
      */
-    public static void generate(Configuration cfg, String dirPath, String templates, String templatePath, String templateName) throws IOException, TemplateException {
-        String fileName = templateName.replace(".flt", "");
+    public static void generate(Configuration cfg, String dirPath, String templates, String templatePath, String templateName, String filePrefix) throws IOException, TemplateException {
+        String fileName = filePrefix + templateName.replace(".flt", "");
         Template template = cfg.getTemplate(templates + "/" + templatePath + "/" + templateName);
 
         File projectDir = new File(dirPath);
         mkdirs(projectDir);
 
         Path path = Paths.get(projectDir.getPath() + "\\" + fileName);
-        Writer writer = Files.newBufferedWriter(path, Charset.defaultCharset(),
+        Writer writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"),
                 StandardOpenOption.CREATE, StandardOpenOption.CREATE);
 
         template.process(root, writer);

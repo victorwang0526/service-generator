@@ -1,0 +1,17 @@
+package ${pkg}.dao;
+
+import ${pkg}.model.${modelName};
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ${modelName}Dao
+		extends GenericDao<String, ${modelName}>
+{
+	class ${modelName}QueryBuild extends QueryBuilder
+	{
+		public static ${modelName}QueryBuild build()
+		{
+			return new ${modelName}QueryBuild();
+		}
+	}
+}
