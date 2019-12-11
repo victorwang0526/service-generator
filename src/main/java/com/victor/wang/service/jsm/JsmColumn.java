@@ -108,4 +108,12 @@ public class JsmColumn
 	public void setJavaType(String javaType) {
 		this.javaType = javaType;
 	}
+
+	public String getJavaTypeInfo() {
+		if(this.javaType.equals("Date")) {
+			return "DateTime";
+		}else {
+			return this.javaType;
+		}
+	}
 }

@@ -1,0 +1,73 @@
+package ${pkg}.manager;
+
+import ${pkg}.dao.${modelName}Dao;
+import ${pkg}.exception.${modelName}NotFoundException;
+import ${pkg}.model.${modelName};
+import ${pkg}.sharedObject.${modelName}Create;
+import ${pkg}.sharedObject.${modelName}Update;
+import ${pkg}.util.UniqueString;
+import ${pkg}.util.dao.DaoHelper;
+import ma.glasnost.orika.MapperFacade;
+import net.sf.oval.constraint.AssertValid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ${modelName}Manager
+{
+	private static final Logger LOGGER = LoggerFactory.getLogger(${modelName}Manager.class);
+
+	@Autowired
+	${modelName}Dao ${modelNameL}Dao;
+
+	@Autowired
+	private MapperFacade mapper;
+
+	public ${modelName} get${modelName}(String id)
+	{
+		LOGGER.debug("${modelName}Manager, get${modelName}; id: {}", id);
+
+		${modelName} ${modelNameL} = ${modelNameL}Dao.get(id);
+		if (${modelNameL} == null)
+		{
+			throw new ${modelName}NotFoundException(id);
+		}
+		return ${modelNameL};
+	}
+
+	public ${modelName} create${modelName}(@AssertValid ${modelName}Create ${modelNameL}Create)
+	{
+		LOGGER.info("${modelName}Manager, create${modelName}; ${modelNameL}Create: {}", ${modelNameL}Create);
+		${modelName} ${modelNameL} = mapper.map(${modelNameL}Create, ${modelName}.class);
+		${modelNameL}.setId(UniqueString.uuidUniqueString());
+		DaoHelper.insert(${modelNameL}Dao, ${modelNameL});
+		return ${modelNameL};
+	}
+
+	public ${modelName} update${modelName}(String id, @AssertValid ${modelName}Update ${modelNameL}Update)
+	{
+		LOGGER.info("${modelName}Manager, update${modelName}; id: {}, ${modelNameL}Update: {}", id, ${modelNameL}Update);
+		${modelName} ${modelNameL} = get${modelName}(id);
+		DaoHelper.updateFromSource(${modelNameL}Dao, ${modelNameL}Update, ${modelNameL});
+		return ${modelNameL};
+	}
+
+	public List<${modelName}> find${modelName}s(String name, int page, int size)
+	{
+		LOGGER.debug("${modelName}Manager, update${modelName}; name: {}, page: {}, size: {}", name, page, size);
+		${modelName}Dao.${modelName}QueryBuild queryBuild = ${modelName}Dao.${modelName}QueryBuild.build()
+				.pagination(page, size);
+		return ${modelNameL}Dao.getList(queryBuild.toParameter());
+	}
+
+	public void delete${modelName}(String id)
+	{
+		LOGGER.info("${modelName}Manager, delete${modelName}; id: {}", id);
+		get${modelName}(id);
+		${modelNameL}Dao.delete(id);
+	}
+}
