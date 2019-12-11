@@ -24,7 +24,7 @@ public class JDBCUtils
 					" COLUMN_COMMENT AS COMMENTS " +
 					" FROM INFORMATION_SCHEMA.COLUMNS " +
 					" WHERE TABLE_NAME = '"+tableName.toLowerCase()+"'" +
-					" ";
+					" ORDER BY ORDINAL_POSITION";
 			rs=stm.executeQuery(sql);
 			while(rs.next()){
 				jsmColumns.add(new JsmColumn(rs.getString(1),

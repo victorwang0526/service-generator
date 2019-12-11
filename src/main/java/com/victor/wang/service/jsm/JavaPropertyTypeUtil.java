@@ -10,7 +10,7 @@ public class JavaPropertyTypeUtil {
     public static String getPropertyType(String dataType) {
 
         String rtn = "String";
-        switch (dataType) {
+        switch (dataType.toLowerCase()) {
             case "char":
             case "varchar":
             case "tinytext":

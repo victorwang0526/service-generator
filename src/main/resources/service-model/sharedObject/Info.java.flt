@@ -3,7 +3,7 @@ package ${pkg}.sharedObject;
 import ${pkg}.model.base.BaseEntity;
 
 <#if hasDate>
-import org.joda.time.DateTime;
+import java.util.Date;
 </#if>
 
 /**
@@ -16,66 +16,22 @@ public class ${modelName}Info
     /**
      * ${c.comments}
      */
-    private ${c.javaTypeInfo} ${c.propertyName};
+    private ${c.javaType} ${c.propertyName};
 
     </#list>
 
-	/**
-	 * created time
-	 */
-	private DateTime createdAt;
-
-	/**
-	 * last modified time
-	 */
-	private DateTime lastModifiedAt;
-
-	/**
-	 * current rvn
-	 */
-	private int rvn;
-
 
     <#list columns as c>
-    public ${c.javaTypeInfo} get${c.propertyNameU}()
+    public ${c.javaType} get${c.propertyNameU}()
     {
         return ${c.propertyName};
     }
 
-    public void set${c.propertyNameU}(${c.javaTypeInfo} ${c.propertyName})
+    public void set${c.propertyNameU}(${c.javaType} ${c.propertyName})
     {
         this.${c.propertyName} = ${c.propertyName};
     }
 
     </#list>
 
-	public DateTime getCreatedAt()
-	{
-		return createdAt;
-	}
-
-	public void setCreatedAt(DateTime createdAt)
-	{
-		this.createdAt = createdAt;
-	}
-
-	public DateTime getLastModifiedAt()
-	{
-		return lastModifiedAt;
-	}
-
-	public void setLastModifiedAt(DateTime lastModifiedAt)
-	{
-		this.lastModifiedAt = lastModifiedAt;
-	}
-
-	public int getRvn()
-	{
-		return rvn;
-	}
-
-	public void setRvn(int rvn)
-	{
-		this.rvn = rvn;
-	}
 }

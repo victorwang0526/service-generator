@@ -10,14 +10,16 @@ public class ${modelName}
 	extends AuditedMysqlEntity
 {
     <#list columns as c>
+    <#if c.hide == false>
     /**
      * ${c.comments}
      */
     private ${c.javaType} ${c.propertyName};
-
+    </#if>
     </#list>
 
     <#list columns as c>
+    <#if c.hide == false>
     public ${c.javaType} get${c.propertyNameU}()
     {
         return ${c.propertyName};
@@ -28,5 +30,6 @@ public class ${modelName}
         this.${c.propertyName} = ${c.propertyName};
     }
 
+    </#if>
     </#list>
 }

@@ -154,14 +154,10 @@ public class GenerateProject {
 
 
             // resources
-            String resourcesPath = ServicePath + "\\src\\main\\resources";
-            String resourcesTemplatePath = "Service/src/main/resources";
             generateForProject(cfg, resourcesPath, resourcesTemplatePath, "application.yaml.flt");
             generateForProject(cfg, resourcesPath, resourcesTemplatePath, "logback.xml.flt");
 
             //resources - mapper
-            String resourcesMapperPath = resourcesPath + "\\mapper";
-            String resourcesMapperTemplatePath = resourcesTemplatePath + "/mapper";
             generateForProject(cfg, resourcesMapperPath, resourcesMapperTemplatePath, "Carrot.xml.flt");
             generateForProject(cfg, resourcesMapperPath, resourcesMapperTemplatePath, "Token.xml.flt");
             generateForProject(cfg, resourcesMapperPath, resourcesMapperTemplatePath, "User.xml.flt");

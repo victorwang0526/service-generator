@@ -11,14 +11,17 @@ public class ${modelName}Update
 		extends BaseEntity
 {
 	<#list columns as c>
+    <#if c.hide == false && c.columnName != "id">
     /**
      * ${c.comments}
      */
     private ${c.javaTypeInfo} ${c.propertyName};
 
+    </#if>
     </#list>
 
     <#list columns as c>
+    <#if c.hide == false && c.columnName != "id">
     public ${c.javaTypeInfo} get${c.propertyNameU}()
     {
         return ${c.propertyName};
@@ -29,5 +32,6 @@ public class ${modelName}Update
         this.${c.propertyName} = ${c.propertyName};
     }
 
+    </#if>
     </#list>
 }

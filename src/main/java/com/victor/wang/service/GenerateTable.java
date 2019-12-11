@@ -64,6 +64,9 @@ public class GenerateTable {
             generateForModel(cfg, packagePath + "\\sharedObject", "sharedObject", "Create.java.flt", modelName);
             generateForModel(cfg, packagePath + "\\sharedObject", "sharedObject", "Info.java.flt", modelName);
             generateForModel(cfg, packagePath + "\\sharedObject", "sharedObject", "Update.java.flt", modelName);
+
+            //xml
+            generateForModel(cfg, resourcesMapperPath, "mapper", ".xml.flt", modelName);
         }catch (Exception e) {
             e.printStackTrace();
         }

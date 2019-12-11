@@ -11,14 +11,17 @@ public class ${modelName}Create
 		extends BaseEntity
 {
     <#list columns as c>
+    <#if c.hide == false>
     /**
      * ${c.comments}
      */
     private ${c.javaTypeInfo} ${c.propertyName};
 
+    </#if>
     </#list>
 
     <#list columns as c>
+    <#if c.hide == false>
     public ${c.javaTypeInfo} get${c.propertyNameU}()
     {
         return ${c.propertyName};
@@ -29,5 +32,6 @@ public class ${modelName}Create
         this.${c.propertyName} = ${c.propertyName};
     }
 
+    </#if>
     </#list>
 }

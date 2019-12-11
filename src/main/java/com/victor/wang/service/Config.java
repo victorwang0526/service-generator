@@ -17,6 +17,11 @@ public class Config {
     public static String ServicePath = projectPath + "\\" + ProjectName + "Service";
 
     public static String packagePath = ServicePath + "\\src\\main\\java";
+    public static String resourcesPath = ServicePath + "\\src\\main\\resources";
+
+    public static String resourcesTemplatePath = "Service/src/main/resources";
+    public static String resourcesMapperPath = resourcesPath + "\\mapper";
+    public static String resourcesMapperTemplatePath = resourcesTemplatePath + "/mapper";
 
     public static Map<String, Object> root = new HashMap<>();
 

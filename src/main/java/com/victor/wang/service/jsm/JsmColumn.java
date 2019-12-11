@@ -116,4 +116,14 @@ public class JsmColumn
 			return this.javaType;
 		}
 	}
+
+	public boolean getHide() {
+		String[] exclude = {"createdAt", "lastModifiedAt", "rvn"};
+		for(String e : exclude) {
+			if(e.equals(this.propertyName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
