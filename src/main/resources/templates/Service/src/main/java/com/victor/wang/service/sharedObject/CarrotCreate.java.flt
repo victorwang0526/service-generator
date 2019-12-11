@@ -6,6 +6,12 @@ import net.sf.oval.constraint.NotNull;
 public class CarrotCreate
 		extends BaseEntity
 {
+    /**
+	 * the carrot name
+	 */
+	@NotNull
+	private String name;
+
 	/**
 	 * the carrot price
 	 */
@@ -17,6 +23,14 @@ public class CarrotCreate
 	 */
 	@NotNull
 	private Integer weight;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Integer getPrice()
 	{
