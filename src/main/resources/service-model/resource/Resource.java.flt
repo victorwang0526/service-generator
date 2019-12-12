@@ -101,16 +101,15 @@ public class ${modelName}Resource
 	 * <h3>Description</h3>.
 	 * <p>Search ${modelNameL}s, with paginated results.</p>
 	 *
-	 * @param name the ${modelNameL} name
 	 * @param page the page
 	 * @param size the page size
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public PaginatedAPIResult<${modelName}Info> find${modelName}s(@QueryParam("name") String name,
-													  @QueryParam("page") @DefaultValue("1") int page,
+	public PaginatedAPIResult<${modelName}Info> find${modelName}s(@QueryParam("page") @DefaultValue("1") int page,
 													  @QueryParam("size") @DefaultValue("10") int size)
 	{
-		return new PaginatedAPIResult<>(mapper.mapAsList(${modelNameL}Manager.find${modelName}s(name, page, size), ${modelName}Info.class), page * size, size);
+		return new PaginatedAPIResult<>(mapper.mapAsList(${modelNameL}Manager.find${modelName}s(page, size), ${modelName}Info.class),
+		page, size, ${modelNameL}Manager.count${modelName}s(page, size));
 	}
 }

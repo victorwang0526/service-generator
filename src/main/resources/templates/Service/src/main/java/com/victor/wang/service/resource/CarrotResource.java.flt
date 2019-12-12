@@ -112,6 +112,7 @@ public class CarrotResource
 													  @QueryParam("page") @DefaultValue("1") int page,
 													  @QueryParam("size") @DefaultValue("10") int size)
 	{
-		return new PaginatedAPIResult<>(mapper.mapAsList(carrotManager.findCarrots(name, page, size), CarrotInfo.class), page * size, size);
+		return new PaginatedAPIResult<>(mapper.mapAsList(carrotManager.findCarrots(name, page, size), CarrotInfo.class),
+		page, size, carrotManager.countCarrots(name, page, size));
 	}
 }

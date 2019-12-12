@@ -56,12 +56,20 @@ public class ${modelName}Manager
 		return ${modelNameL};
 	}
 
-	public List<${modelName}> find${modelName}s(String name, int page, int size)
+	public List<${modelName}> find${modelName}s(int page, int size)
 	{
-		LOGGER.debug("${modelName}Manager, update${modelName}; name: {}, page: {}, size: {}", name, page, size);
+		LOGGER.debug("${modelName}Manager, update${modelName}; page: {}, size: {}", page, size);
 		${modelName}Dao.${modelName}QueryBuild queryBuild = ${modelName}Dao.${modelName}QueryBuild.build()
 				.pagination(page, size);
 		return ${modelNameL}Dao.getList(queryBuild.toParameter());
+	}
+
+	public int count${modelName}s(int page, int size)
+	{
+		LOGGER.debug("${modelName}Manager, count${modelName}s; page: {}, size: {}", page, size);
+		${modelName}Dao.${modelName}QueryBuild queryBuild = ${modelName}Dao.${modelName}QueryBuild.build()
+		        .pagination(page, size);
+		return ${modelNameL}Dao.getCount(queryBuild.toParameter());
 	}
 
 	public void delete${modelName}(String id)

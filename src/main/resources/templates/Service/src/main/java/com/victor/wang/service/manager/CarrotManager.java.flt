@@ -64,6 +64,14 @@ public class CarrotManager
 		return carrotDao.getList(queryBuild.toParameter());
 	}
 
+	public int countCarrots(String name, int page, int size)
+	{
+		LOGGER.debug("CarrotManager, countCarrots; name: {}, page: {}, size: {}", name, page, size);
+		CarrotDao.CarrotQueryBuild queryBuild = CarrotDao.CarrotQueryBuild.build().filterByName(name)
+				.pagination(page, size);
+		return carrotDao.getCount(queryBuild.toParameter());
+	}
+
 	public void deleteCarrot(String id)
 	{
 		LOGGER.info("CarrotManager, deleteCarrot; id: {}", id);

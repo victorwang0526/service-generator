@@ -9,62 +9,57 @@ package ${pkg}.sharedObject;
  */
 public class PaginationContext
 {
-	private int count = 0;
-	private int start = 0;
-	private Integer total;
-
-	public PaginationContext()
-	{
-
-	}
-
 	/**
-	 * The start index of the page. 0 based
-	 */
-	public int getStart()
-	{
-		return start;
-	}
+     * current page index, 1 based
+     */
+    private int page = 1;
 
-	/**
-	 * The start index of the page. 0 based
-	 */
-	public void setStart(int pageStart)
-	{
-		this.start = pageStart;
-	}
+    /**
+     * current page size
+     */
+    private int size = 0;
 
-	/**
-	 * The page size.
-	 */
-	public int getCount()
-	{
-		return count;
-	}
+    /**
+     * the total pages
+     */
+    private Integer total;
 
-	/**
-	 * The page size.
-	 */
-	public void setCount(int numPerPage)
-	{
-		this.count = numPerPage;
-	}
+    public PaginationContext()
+    {
 
-	/**
-	 * The total number of available records available from the API from which this page was obtained.
-	 * May not be set by all APIs
-	 */
-	public Integer getTotal()
-	{
-		return total;
-	}
+    }
 
-	/**
-	 * The total number of available records available from the API from which this page was obtained.
-	 * May not be set by all APIs
-	 */
-	public void setTotal(Integer totalResultCount)
-	{
-		this.total = totalResultCount;
-	}
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    /**
+     * The total number of available records available from the API from which this page was obtained.
+     * May not be set by all APIs
+     */
+    public Integer getTotal()
+    {
+        return total;
+    }
+
+    /**
+     * The total number of available records available from the API from which this page was obtained.
+     * May not be set by all APIs
+     */
+    public void setTotal(Integer totalResultCount)
+    {
+        this.total = totalResultCount / this.size + (totalResultCount % this.size == 0 ? 0 : 1);
+    }
 }
