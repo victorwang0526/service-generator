@@ -4,7 +4,7 @@ import ${pkg}.model.base.BaseEntity;
 import net.sf.oval.constraint.NotNull;
 
 <#if hasDate>
-import org.joda.time.DateTime;
+import java.util.Date;
 </#if>
 
 public class ${modelName}Create
@@ -15,19 +15,19 @@ public class ${modelName}Create
     /**
      * ${c.comments}
      */
-    private ${c.javaTypeInfo} ${c.propertyName};
+    private ${c.javaType} ${c.propertyName};
 
     </#if>
     </#list>
 
     <#list columns as c>
     <#if c.hide == false>
-    public ${c.javaTypeInfo} get${c.propertyNameU}()
+    public ${c.javaType} get${c.propertyNameU}()
     {
         return ${c.propertyName};
     }
 
-    public void set${c.propertyNameU}(${c.javaTypeInfo} ${c.propertyName})
+    public void set${c.propertyNameU}(${c.javaType} ${c.propertyName})
     {
         this.${c.propertyName} = ${c.propertyName};
     }

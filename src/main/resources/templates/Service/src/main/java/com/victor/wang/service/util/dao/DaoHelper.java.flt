@@ -268,7 +268,11 @@ public class DaoHelper
 		{
 			if (!BaseEntity.UNSET_DATETIME.equals(sourceValue))
 			{
-				destinationField.set(destinationObject, sourceValue);
+				if(destinationType.equals(Date.class)) {
+                    destinationField.set(destinationObject, ((DateTime)sourceValue).toDate());
+                }else {
+                    destinationField.set(destinationObject, sourceValue);
+                }
 				updatedFields.put(sourceField.getName(), buildUpdatedValueMap(destValue, sourceValue));
 			}
 		}
@@ -347,7 +351,11 @@ public class DaoHelper
 		}
 		else
 		{
-			if (sourceType.isPrimitive() && destinationType.equals(PRIMITIVE_TYPE_MAP.get(sourceType)))
+			if(sourceType == DateTime.class && destinationType == Date.class)
+            {
+                return true;
+            }
+            else if (sourceType.isPrimitive() && destinationType.equals(PRIMITIVE_TYPE_MAP.get(sourceType)))
 			{
 				return true;
 			}
