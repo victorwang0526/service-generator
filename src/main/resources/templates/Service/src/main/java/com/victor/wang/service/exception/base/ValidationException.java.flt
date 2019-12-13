@@ -15,7 +15,7 @@ import java.util.Map;
 public class ValidationException
 		extends ApplicationException
 {
-	public static final String VALIDATION_EXCEPTION_ERROR_CODE = "errors.com.victor.wang.validation.validation_failed";
+	public static final String VALIDATION_EXCEPTION_ERROR_CODE = "errors.${group}.validation.validation_failed";
 	public static final String ERROR_MESSAGE = "Validation Failed. Invalid fields were {}";
 	public static final int DEFAULT_NUMERIC_ERROR_CODE = 1040;
 	public static final int STATUS_CODE = HttpStatusCodeConstants.BAD_REQUEST;

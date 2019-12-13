@@ -63,9 +63,11 @@ public class GenerateProject {
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "ConflictException.java.flt");
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "DatabaseOperationConflictException.java.flt");
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "FieldValidationFailure.java.flt");
+            generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "ForbiddenException.java.flt");
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "HttpStatusCodeConstants.java.flt");
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "NotFoundException.java.flt");
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "NumericErrorCodes.java.flt");
+            generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "UnauthorizedException.java.flt");
             generateForProject(cfg, exceptionBasePath, exceptionBaseTemplatePath, "ValidationException.java.flt");
 
             // main - filter

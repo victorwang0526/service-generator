@@ -1,0 +1,20 @@
+package ${pkg}.exception.base;
+
+public class ForbiddenException
+        extends ApplicationException {
+    public static final String DEFAULT_ERROR_CODE = "errors.${group}.forbidden";
+    public static final int STATUS_CODE = HttpStatusCodeConstants.FORBIDDEN;
+    public static final int DEFAULT_NUMERIC_ERROR_CODE = 4003;
+
+    /**
+     * Create a new exception with an errorCode numericErrorCode message pattern, and an optional array of substitution
+     * variables for the message pattern.
+     *
+     * @param pattern          The message for the exception possibly containing substitution markers with the format {}
+     * @param args             An array of Objects on which toString() will be used so that they can be substituted into the pattern.
+     */
+    public ForbiddenException(String pattern, Object... args)
+    {
+        super(STATUS_CODE, DEFAULT_ERROR_CODE, DEFAULT_NUMERIC_ERROR_CODE, pattern, args);
+    }
+}

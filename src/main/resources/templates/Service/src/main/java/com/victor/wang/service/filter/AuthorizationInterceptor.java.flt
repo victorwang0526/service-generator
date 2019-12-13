@@ -2,7 +2,7 @@ package ${pkg}.filter;
 
 import ${pkg}.dao.TokenDao;
 import ${pkg}.dao.UserDao;
-import ${pkg}.exception.base.BadRequestException;
+import ${pkg}.exception.base.UnauthorizedException;
 import ${pkg}.model.Token;
 import ${pkg}.model.User;
 import org.apache.commons.lang3.StringUtils;
@@ -43,24 +43,24 @@ public class AuthorizationInterceptor
 		} else {
 
 			String token = requestContext.getHeaderString(TOKEN);
-			if(token == null || StringUtils.isEmpty(token)){
-				throw new BadRequestException(401, "authorization_needed", "no token");
-			}
+            if(token == null || StringUtils.isEmpty(token)){
+                throw new UnauthorizedException("unauthorized");
+            }
 
-			List<Token> tokens = tokenDao.getByToken(token);
+            List<Token> tokens = tokenDao.getByToken(token);
 
-			if(tokens == null || tokens.size() == 0){
-				throw new BadRequestException(403, "authorization_error", "invalid token");
-			}
-			Token tokenInfo = tokens.get(0);
+            if(tokens == null || tokens.size() == 0){
+                throw new UnauthorizedException("token not found");
+            }
+            Token tokenInfo = tokens.get(0);
 
-			User user = userDao.get(tokenInfo.getUserId());
-			if(user == null){
-				throw new BadRequestException(403, "authrization_error", "invalid user");
-			}
+            User user = userDao.get(tokenInfo.getUserId());
+            if(user == null){
+                throw new UnauthorizedException("invalid user");
+            }
 
-			AuthorizationManager.logonUser.set(user);
-			AuthorizationManager.token.set(tokenInfo);
+            AuthorizationManager.logonUser.set(user);
+            AuthorizationManager.token.set(tokenInfo);
 
 		}
 	}
