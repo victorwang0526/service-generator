@@ -16,7 +16,7 @@ import java.util.List;
 public class AuthorizationInterceptor
 		implements ContainerRequestFilter {
 		
-	public static final String TOKEN = "token";
+	public static final String TOKEN = "X-Access-Token";
 
 	@Autowired
 	private TokenDao tokenDao;

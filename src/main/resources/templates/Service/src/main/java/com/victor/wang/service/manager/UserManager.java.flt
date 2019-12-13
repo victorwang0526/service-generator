@@ -75,7 +75,7 @@ public class UserManager
 		DaoHelper.insert(tokenDao, token);
 
 		UserToken userToken = new UserToken();
-		userToken.setToken(token.getToken());
+		userToken.setAccessToken(token.getToken());
 
 		userToken.setUserInfo(mapper.map(user, UserInfo.class));
 		return userToken;

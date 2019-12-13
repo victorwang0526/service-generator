@@ -6,18 +6,18 @@ import ${pkg}.model.base.BaseEntity;
 public class UserToken
 		extends BaseEntity
 {
-	private String token;
+	private String accessToken;
 
 	private UserInfo userInfo;
 
-	public String getToken()
+	public String getAccessToken()
 	{
-		return token;
+		return accessToken;
 	}
 
-	public void setToken(String token)
+	public void setAccessToken(String accessToken)
 	{
-		this.token = token;
+		this.accessToken = accessToken;
 	}
 
 	public UserInfo getUserInfo()
